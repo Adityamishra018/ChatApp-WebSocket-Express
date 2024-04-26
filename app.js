@@ -13,7 +13,7 @@ app.use(cors())
 app.set('view engine','ejs')
 app.set('views',path.resolve('./views'))
 
-app.use(express.static("."))
+app.use(Express.static("."))
 
 app.get('/',(req,res)=>{
     res.render('index',{
