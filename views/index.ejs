@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.min.js"></script>
+</head>
+<body>
+    <i>Welcome to chat room, to add your friends to chat invite them to connect to <%= address %> </i>
+    <hr />
+    <form action="/" id="chat">
+        <input name="msg" type="text" placeholder="Enter msg here" />
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="messages">
+        <ul id="chat-history">
+
+        </ul>
+    </div>
+    
+    <script>
+        const socket = io(window.location.href)
+        const msgs = document.getElementById('chat-history')
+        const form = document.getElementById('chat')
+
+        form.addEventListener('submit',e=>{
+            e.preventDefault()
+            socket.emit('newMsgFromClient',form.msg.value)
+            form.msg.value = '';
+        })
+
+        socket.on('newMsgFromServer',msg=>{
+            msgs.innerHTML += `<li>${msg}</li>`
+        })
+    </script>
+</body>
+</html>
