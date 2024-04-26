@@ -2,13 +2,18 @@ import Express from "express";
 import cors from 'cors'
 import dotenv from 'dotenv'
 import {Server} from 'socket.io'
+import path from "path";
 
 dotenv.config()
 
 const app = Express()  
 
 app.use(cors())
+
 app.set('view engine','ejs')
+app.set('views',path.resolve('./views'))
+
+app.use(express.static("."))
 
 app.get('/',(req,res)=>{
     res.render('index',{
