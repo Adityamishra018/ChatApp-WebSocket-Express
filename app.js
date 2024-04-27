@@ -39,6 +39,3 @@ io.on('connection',(socket)=>{
         io.emit('newMsgFromServer',msg)
     })
 })
-
-export default app //vercel config
-
