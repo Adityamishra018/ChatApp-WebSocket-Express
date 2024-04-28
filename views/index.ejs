@@ -21,7 +21,7 @@
     </div>
     
     <script>
-        const socket = io(window.location.href)
+        const socket = io(window.location.href, {upgrade : false})  //will always use http long polling, disable if your hoster supports sockets
         const msgs = document.getElementById('chat-history')
         const form = document.getElementById('chat')
 

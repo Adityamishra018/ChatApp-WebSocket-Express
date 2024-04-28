@@ -21,7 +21,7 @@ app.get('/',(req,res)=>{
     });
 })
 
-const server = app.listen(4000,(err)=>{
+const server = app.listen(process.env.PORT,(err)=>{
     if(!err)
         console.log('Server running');
 })
