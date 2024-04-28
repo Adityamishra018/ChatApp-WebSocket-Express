@@ -1,39 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ChatApp</title>
     <script src="/socket.io/socket.io.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=1.0">
+    <link rel="stylesheet" href="/styles/index.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <i>Welcome to chat room, to add your friends to chat invite them to connect to <%= address %> </i>
-    <hr />
-    <form action="/" id="chat">
-        <input name="msg" type="text" placeholder="Enter msg here" />
-        <button type="submit">Submit</button>
-    </form>
+    <h1>Welcome to chat room <span id="username"></span></h1>
+    <h2>To add your friends to the chat, ask them to visit <%= address %>
+    </h2>
 
-    <div class="messages">
-        <ul id="chat-history">
-
-        </ul>
+    <div class="chat-container">
+        <div class="messages">
+            <ul id="chat-history"></ul>
+        </div>
+        <form action="/" id="chat">
+            <input name="msg" type="text" placeholder="Enter msg here" />
+            <button type="submit">Send</button>
+        </form>
     </div>
-    
+
     <script>
-        const socket = io(window.location.href, {upgrade : false})  //will always use http long polling, disable if your hoster supports sockets
+        const socket = io(window.location.href, { upgrade: false })  //will always use http long polling, disable if your hoster supports sockets
         const msgs = document.getElementById('chat-history')
         const form = document.getElementById('chat')
 
-        form.addEventListener('submit',e=>{
+        form.addEventListener('submit', e => {
             e.preventDefault()
-            socket.emit('newMsgFromClient',form.msg.value)
+            const user = document.getElementById('username')
+            socket.emit('newMsgFromClient', { 'msg': form.msg.value, 'sender': user.innerHTML })
             form.msg.value = '';
         })
 
-        socket.on('newMsgFromServer',msg=>{
-            msgs.innerHTML += `<li>${msg}</li>`
+        socket.on('newMsgFromServer', ({ msg, sender }) => {
+            console.log(msg, sender)
+            msgs.innerHTML += `<li class="msg">[${new Date().toLocaleTimeString()}] ${sender} : ${msg}</li>`
+        })
+
+        socket.on('newUser', user => {
+            msgs.innerHTML += `<li class="status">${user} has joined the chat [${new Date().toLocaleTimeString()}]</li>`
+        })
+
+        socket.on('lostUser', user => {
+            msgs.innerHTML += `<li class="status">${user} has left the chat [${new Date().toLocaleTimeString()}]</li>`
+        })
+
+        socket.on('username', name => {
+            console.log('connection established')
+            const user = document.getElementById('username')
+            user.innerHTML = name
+        })
+
+        socket.on('disconnect', () => {
+            msgs.innerHTML += `<li>Sorry you lost the connection</li>`
+            form.style.display = 'none'
         })
     </script>
 </body>
+
 </html>

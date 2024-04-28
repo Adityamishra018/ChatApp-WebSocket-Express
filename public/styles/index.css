@@ -1,0 +1,95 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+li {
+    list-style: none;
+    display: block;
+    width: 70%;
+}
+
+.chat-container {
+    width: 95%;
+    padding: 0.5rem;
+    margin-block: 20px;
+    margin-inline: auto;
+    background-color: lightcyan;
+    height: 70vh;
+    border: 1px solid black;
+    box-shadow: 0px 0px 10px gray;
+}
+
+h1 {
+    margin-top: 2rem;
+    text-align: center;
+    width: 70%;
+    margin-inline: auto;
+    color: transparent;
+    background-clip: text;
+    background-image: linear-gradient(to right, blue,red,green);
+}
+
+h2 {
+    width: 80%;
+    margin-top: 2rem;
+    margin-inline: auto;
+    text-align: center;
+    color: transparent;
+    background-clip: text;
+    font-style: italic;
+    background-image: linear-gradient(to right, brown, rgb(25, 188, 150));
+}
+
+
+.messages {
+    height: 95%;
+    overflow-y: auto;
+}
+
+#chat {
+    display: flex;
+    bottom: 1px;
+}
+
+input {
+    flex-grow: 1;
+    height: 2rem
+}
+
+button {
+    margin-inline: 0.2rem;
+    background-color: rgb(83, 83, 207);
+    color : white;
+    border: none;
+    padding-inline: 1rem;
+    border-radius: 2px;
+}
+
+#chat-history .status {
+    margin-left: auto;
+    text-align: right;
+    padding-inline: 1rem;
+}
+
+#chat-history .msg {
+    margin-right: auto;
+    text-align: left;
+}
+
+#username::before{
+    content: "'";
+    display: inline;
+}
+
+#username::after{
+    content: "'";
+    display: inline;
+}
