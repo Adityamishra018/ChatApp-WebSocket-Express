@@ -1,6 +1,5 @@
 import os from 'os'
 
-//comment added remotely
 export default function getPrivateIPv4Addresses() {
     const interfaces = os.networkInterfaces();
     const privateIPv4Addresses = [];
